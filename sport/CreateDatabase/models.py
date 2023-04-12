@@ -16,27 +16,27 @@ class Sportsmen(models.Model):
         ordering = ['sportsmen_fio', 'sportsmen_age']
 
 
-class Treners(models.Model):
-    treners_id = models.AutoField(primary_key=True)
-    treners_fio = models.CharField(max_length=255, verbose_name='ФИО')
-    treners_passport = models.TextField(verbose_name='Паспорт')
-    treners_kval = models.TextField(verbose_name='Квалификация')
-    treners_team = models.TextField(verbose_name='Команда')
+class Trener(models.Model):
+    trener_id = models.AutoField(primary_key=True)
+    trener_fio = models.CharField(max_length=255, verbose_name='ФИО')
+    trener_passport = models.TextField(verbose_name='Паспорт')
+    trener_kval = models.TextField(verbose_name='Квалификация')
+    trener_team = models.TextField(verbose_name='Команда')
 
     def __str__(self):
-        return self.treners_fio
+        return self.trener_fio
 
     class Meta:
         verbose_name = 'Тренер'
         verbose_name_plural = 'Тренеры'
-        ordering = ['treners_fio']
+        ordering = ['trener_fio']
 
 
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)
     team_name = models.TextField(verbose_name='Название команды')
     team_vidsporta = models.ForeignKey('VidSporta', on_delete=models.PROTECT, verbose_name='Вид спорта')
-    team_trener = models.ForeignKey('Treners', on_delete=models.PROTECT, verbose_name='Тренер')
+    team_trener = models.ForeignKey('Trener', on_delete=models.PROTECT, verbose_name='Тренер')
     team_type = models.BooleanField(default=False, verbose_name='Командный или НЕТ')
 
     def __str__(self):
@@ -100,9 +100,9 @@ class Games(models.Model):
 
 class ResultsTeam(models.Model):
     resultteam_id = models.ForeignKey('Games', on_delete=models.PROTECT)
-    resultteam_team1 = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Команда 1')
-    resultteam_team2 = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Команда 2')
-    resultteam_result = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Победитель')
+    resultteam_team1 = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Команда 1', related_name='+')
+    resultteam_team2 = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Команда 2', related_name='+')
+    resultteam_result = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Победитель', related_name='+')
 
     class Meta:
         verbose_name = 'Промежуточный результат команд'
