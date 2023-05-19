@@ -5,11 +5,12 @@ class Sportsmen(models.Model):
     sportsmen_id = models.AutoField(primary_key=True)
     sportsmen_fio = models.CharField(max_length=255, verbose_name='ФИО')
     sportsmen_age = models.IntegerField(verbose_name='Возраст')
-    sportsmen_team = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name="Команда")
+    sportsmen_trener = models.ForeignKey('Trener', on_delete=models.PROTECT, verbose_name='Тренер')
+    sportsmen_team = models.OneToOneField('Team', on_delete=models.PROTECT, verbose_name="Команда")
 
     def __str__(self):
         return self.sportsmen_fio
-    
+
     class Meta:
         verbose_name = 'Спортсмен'
         verbose_name_plural = 'Спортсмены'
@@ -19,9 +20,10 @@ class Sportsmen(models.Model):
 class Trener(models.Model):
     trener_id = models.AutoField(primary_key=True)
     trener_fio = models.CharField(max_length=255, verbose_name='ФИО')
-    trener_passport = models.TextField(verbose_name='Паспорт')
+    trener_passport = models.TextField(verbose_name='Паспорт', unique=True)
     trener_kval = models.TextField(verbose_name='Квалификация')
-    trener_team = models.TextField(verbose_name='Команда')
+
+    #trener_team = models.TextField(verbose_name='Команда')
 
     def __str__(self):
         return self.trener_fio
@@ -31,13 +33,26 @@ class Trener(models.Model):
         verbose_name_plural = 'Тренеры'
         ordering = ['trener_fio']
 
+class Subject(models.Model):
+    subject_name = models.TextField(primary_key=True,  verbose_name='Вид субъекта', unique=True)
+
+    def __str__(self):
+        return self.subject_name
+
+    class Meta:
+        verbose_name = 'Вид субъекта'
+        verbose_name_plural = 'Виды субъекта'
+        ordering = ['subject_name']
+
+
 
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)
-    team_name = models.TextField(verbose_name='Название команды')
+    team_subject = models.ForeignKey('Subject', on_delete=models.PROTECT, verbose_name='Вид субъекта')
+    team_name = models.TextField(verbose_name='Название команды', unique=True)
     team_vidsporta = models.ForeignKey('VidSporta', on_delete=models.PROTECT, verbose_name='Вид спорта')
     team_trener = models.ForeignKey('Trener', on_delete=models.PROTECT, verbose_name='Тренер')
-    team_type = models.BooleanField(default=False, verbose_name='Командный или НЕТ')
+    #team_type = models.BooleanField(default=False, verbose_name='Командный или НЕТ')
 
     def __str__(self):
         return self.team_name
@@ -47,8 +62,10 @@ class Team(models.Model):
         verbose_name_plural = 'Команды'
         ordering = ['team_vidsporta', 'team_name']
 
+
 class VidSporta(models.Model):
-    vidsporta_name = models.TextField(primary_key=True,  verbose_name='Вид спорта')
+    vidsporta_name = models.TextField(primary_key=True,  verbose_name='Вид спорта', unique=True)
+    vidsporta_type = models.BooleanField(default=False, verbose_name='Командный или НЕТ')
 
     def __str__(self):
         return self.vidsporta_name

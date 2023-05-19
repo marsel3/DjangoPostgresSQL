@@ -16,21 +16,21 @@ class SportsmenAdmin(admin.ModelAdmin):
 
 
 class TrenerAdmin(admin.ModelAdmin):
-    list_display = ('trener_fio', 'trener_passport', 'trener_kval', 'trener_team')
-    list_display_links = ('trener_fio', 'trener_passport', 'trener_kval', 'trener_team')
-    search_fields = ('trener_fio', 'trener_kval', 'trener_team')
+    list_display = ('trener_fio', 'trener_passport', 'trener_kval')
+    list_display_links = ('trener_fio', 'trener_passport', 'trener_kval')
+    search_fields = ('trener_fio', 'trener_kval')
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('team_name', 'team_vidsporta', 'team_trener', 'team_type')
-    list_display_links = ('team_name', 'team_vidsporta', 'team_trener', 'team_type')
-    search_fields = ('team_name', 'team_vidsporta', 'team_trener', 'team_type')
+    list_display = ('team_name', 'team_vidsporta', 'team_trener')
+    list_display_links = ('team_name', 'team_vidsporta', 'team_trener')
+    search_fields = ('team_name', 'team_vidsporta', 'team_trener')
 
 
 class VidSportaAdmin(admin.ModelAdmin):
-    list_display = ('vidsporta_name', )
-    list_display_links = ('vidsporta_name', )
-    search_fields = ('vidsporta_name', )
+    list_display = ('vidsporta_name', 'vidsporta_type')
+    list_display_links = ('vidsporta_name', 'vidsporta_type')
+    search_fields = ('vidsporta_name', 'vidsporta_type')
 
 
 class StadionAdmin(admin.ModelAdmin):
@@ -63,6 +63,11 @@ class ResultsTeamAdmin(admin.ModelAdmin):
     search_fields = ('resultteam_team1', 'resultteam_team2')
 
 
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ('subject_name',)
+    list_display_links = ('subject_name',)
+    search_fields = ('subject_name',)
+
 
 admin.site.register(Admin, AdminAdmin)
 admin.site.register(Sportsmen, SportsmenAdmin)
@@ -74,3 +79,4 @@ admin.site.register(Competition, CompetitionAdmin)
 admin.site.register(Games, GamesAdmin)
 admin.site.register(ResultsSolo, ResultsSoloAdmin)
 admin.site.register(ResultsTeam, ResultsTeamAdmin)
+admin.site.register(Subject, SubjectAdmin)
