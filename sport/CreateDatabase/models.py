@@ -138,16 +138,16 @@ class ResultsSolo(models.Model):
         ordering = ['resultsolo_id']
 
 
-class Admin(models.Model):
-    admin_id = models.AutoField(primary_key=True)
-    admin_fio = models.TextField(verbose_name='ФИО')
-    admin_login = models.CharField(max_length=255, verbose_name='Логин')
-    admin_password = models.CharField(max_length=255, verbose_name='Пароль')
+class Users(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    user_name = models.TextField(verbose_name='username')
+    user_fullname = models.TextField(verbose_name='ФИО')
+    user_status = models.TextField(verbose_name='статус', default='user')
 
     def __str__(self):
-        return self.admin_login
+        return self.user_name
 
     class Meta:
-        verbose_name = 'Админ'
-        verbose_name_plural = 'Админы'
-        ordering = ['admin_login', 'admin_fio']
+        verbose_name = 'Юзер'
+        verbose_name_plural = 'Юзеры'
+        ordering = ['user_name', 'user_fullname', 'user_status']

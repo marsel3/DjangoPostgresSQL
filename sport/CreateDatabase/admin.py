@@ -3,10 +3,10 @@ from .models import *
 # Register your models here.
 
 
-class AdminAdmin(admin.ModelAdmin):
-    list_display = ('admin_fio', 'admin_login')
-    list_display_links = ('admin_fio', 'admin_login')
-    search_fields = ('admin_fio', 'admin_login')
+class UsersAdmin(admin.ModelAdmin):
+    list_display = ('user_name', 'user_fullname', 'user_status')
+    list_display_links = ('user_name', 'user_fullname', 'user_status')
+    search_fields = ('user_name', 'user_fullname', 'user_status')
 
 
 class SportsmenAdmin(admin.ModelAdmin):
@@ -69,7 +69,7 @@ class SubjectAdmin(admin.ModelAdmin):
     search_fields = ('subject_name',)
 
 
-admin.site.register(Admin, AdminAdmin)
+admin.site.register(Users, UsersAdmin)
 admin.site.register(Sportsmen, SportsmenAdmin)
 admin.site.register(Trener, TrenerAdmin)
 admin.site.register(Team, TeamAdmin)
