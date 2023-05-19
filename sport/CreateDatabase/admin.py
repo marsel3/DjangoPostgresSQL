@@ -15,16 +15,19 @@ class SportsmenAdmin(admin.ModelAdmin):
     search_fields = ('sportsmen_fio', 'sportsmen_team')
 
 
+
+
 class TrenerAdmin(admin.ModelAdmin):
-    list_display = ('trener_fio', 'trener_passport', 'trener_kval')
-    list_display_links = ('trener_fio', 'trener_passport', 'trener_kval')
-    search_fields = ('trener_fio', 'trener_kval')
+    list_display = ('trener_tg', 'trener_fio', 'trener_passport', 'trener_kval')
+    list_display_links = ('trener_tg', 'trener_fio', 'trener_passport', 'trener_kval')
+    search_fields = ('trener_tg', 'trener_fio', 'trener_passport', 'trener_kval')
 
 
 class TeamAdmin(admin.ModelAdmin):
     list_display = ('team_name', 'team_vidsporta', 'team_trener')
     list_display_links = ('team_name', 'team_vidsporta', 'team_trener')
     search_fields = ('team_name', 'team_vidsporta', 'team_trener')
+
 
 
 class VidSportaAdmin(admin.ModelAdmin):
@@ -40,10 +43,9 @@ class StadionAdmin(admin.ModelAdmin):
 
 
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ('competition_vidsporta', 'competition_date', 'competition_team', 'competition_mesto', 'competition_place')
-    list_display_links = ('competition_vidsporta', 'competition_date', 'competition_team', 'competition_mesto', 'competition_place')
-    search_fields = ('competition_vidsporta', 'competition_date', 'competition_team', 'competition_place')
-
+    list_display = ('competition_vidsporta', 'competition_team', 'competition_mesto')
+    list_display_links = ('competition_vidsporta', 'competition_team', 'competition_mesto')
+    search_fields = ('competition_vidsporta', 'competition_team', 'competition_mesto')
 
 class GamesAdmin(admin.ModelAdmin):
     list_display = ('games_vidsporta', 'games_date', 'games_place')
@@ -52,8 +54,8 @@ class GamesAdmin(admin.ModelAdmin):
 
 
 class ResultsSoloAdmin(admin.ModelAdmin):
-    list_display = ('resultsolo_solo', 'game_result')
-    list_display_links = ('resultsolo_solo', 'game_result')
+    list_display = ('resultsolo_id', 'resultsolo_solo', 'game_result')
+    list_display_links = ('resultsolo_id', 'resultsolo_solo', 'game_result')
     search_fields = ('resultsolo_solo', 'game_result')
 
 

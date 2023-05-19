@@ -19,11 +19,10 @@ class Sportsmen(models.Model):
 
 class Trener(models.Model):
     trener_id = models.AutoField(primary_key=True)
+    trener_tg = models.IntegerField(verbose_name='TelegramID', blank=True, null=True)
     trener_fio = models.CharField(max_length=255, verbose_name='ФИО')
     trener_passport = models.TextField(verbose_name='Паспорт', unique=True)
     trener_kval = models.TextField(verbose_name='Квалификация')
-
-    #trener_team = models.TextField(verbose_name='Команда')
 
     def __str__(self):
         return self.trener_fio
@@ -64,7 +63,8 @@ class Team(models.Model):
 
 
 class VidSporta(models.Model):
-    vidsporta_name = models.TextField(primary_key=True,  verbose_name='Вид спорта', unique=True)
+    vidsporta_id = models.AutoField(primary_key=True, unique=True)
+    vidsporta_name = models.TextField(verbose_name='Вид спорта', unique=True)
     vidsporta_type = models.BooleanField(default=False, verbose_name='Командный или НЕТ')
 
     def __str__(self):
@@ -92,22 +92,27 @@ class Stadion(models.Model):
 
 class Competition(models.Model):
     competition_vidsporta = models.ForeignKey('VidSporta', on_delete=models.PROTECT, verbose_name='Вид спорта')
-    competition_date = models.DateField(verbose_name='Дата')
+    #competition_date = models.DateField(verbose_name='Дата')
     competition_team = models.ForeignKey('Team', on_delete=models.PROTECT, verbose_name='Команда')
     competition_mesto = models.IntegerField(verbose_name="Место победителя")
-    competition_place = models.ForeignKey('Stadion', on_delete=models.PROTECT, verbose_name='Место проведения')
+    #competition_place = models.ForeignKey('Stadion', on_delete=models.PROTECT, verbose_name='Место проведения')
+
 
     class Meta:
         verbose_name = 'Финальный результат'
         verbose_name_plural = 'Финальные результаты'
-        ordering = ['competition_vidsporta', 'competition_date']
+        ordering = ['competition_vidsporta', 'competition_team']
 
 
 class Games(models.Model):
     games_id = models.AutoField(primary_key=True)
+    games_name = models.TextField()
     games_vidsporta = models.ForeignKey('VidSporta', on_delete=models.PROTECT, verbose_name='Вид спорта')
     games_date = models.DateField(verbose_name='Дата')
     games_place = models.ForeignKey('Stadion', on_delete=models.PROTECT, verbose_name='Место проведения')
+
+    def __str__(self):
+        return self.games_name
 
     class Meta:
         verbose_name = 'Игра'
@@ -139,8 +144,8 @@ class ResultsSolo(models.Model):
 
 
 class Users(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    user_name = models.TextField(verbose_name='username')
+    user_id = models.TextField(primary_key=True, unique=True)
+    user_name = models.TextField(verbose_name='username', null=True)
     user_fullname = models.TextField(verbose_name='ФИО')
     user_status = models.TextField(verbose_name='статус', default='user')
 
